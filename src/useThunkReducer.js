@@ -2,12 +2,15 @@ import { useReducer, useRef } from "react";
 
 function useThunkReducer(reducer, initialState) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const thunk_dispatch_ref = useRef();
+  const thunkDispatchRef = useRef();
 
   const thunkDispatch = action =>
-    typeof action === "function" ? action(thunk_dispatch_ref.current, state) : dispatch(action);
-  thunk_dispatch_ref.current = thunkDispatch;
-  
+    typeof action === "function"
+      ? action(thunkDispatchRef.current, state)
+      : dispatch(action);
+
+  thunkDispatchRef.current = thunkDispatch;
+
   return [state, thunkDispatch];
 }
 
